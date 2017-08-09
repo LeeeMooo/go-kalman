@@ -20,11 +20,10 @@ var P_01 = 0.0
 var P_10 = 0.0
 var P_11 = 0.0
 
-
+//1D Kalman
 func KalmanCalculate(newAngle, newRate, Looptime float64) (float64) {
 
 	dtk := (Looptime / 1000)
-	fmt.Printf("\nlooptime %f",dtk)
 	x_angle += dtk * (newRate - x_bias)
 	P_00 += - dtk * (P_10 + P_01) + Q_angle * dtk
 	P_01 += - dtk * P_11
@@ -64,7 +63,7 @@ func main() {
 	FuelData := []*fuel_data{}
 
 	if err := gocsv.UnmarshalFile(LocationsFile, &FuelData); err != nil {
-		// Load Locations from file
+		// Load data from file. Keep epoch_timestamp,value
 		panic(err)
 	}
 	fmt.Printf("Done Marshalling Length of fuel data %d\n",len(FuelData))
